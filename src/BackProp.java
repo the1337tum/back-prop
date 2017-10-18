@@ -5,7 +5,7 @@
 	//
 	//============================================================================
 
-
+// Remove and restructure Delta code: apply error directly to nodes
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
 	double BIAS = 0.0;
