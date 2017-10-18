@@ -91,6 +91,7 @@ public class BackProp {
 		return variance;
 	}
 
+    // TODO: Hidden node should have a hidden weight - recode and test.
     void push_forward() {
     	// hidden activations
     	int sum = 0;
