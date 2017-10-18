@@ -61,6 +61,7 @@ public class BackProp {
 
 	// delta[0] = output delta
 	// delta[1] = hidden delta
+	// edges += or just = ?
 	double back_prop() {
 		double variance = 0.0;
 		
@@ -86,7 +87,7 @@ public class BackProp {
 		// input-hidden error
 		for (int n = 0; n < i.length; n++)
 			for (int e = 0; e < h.length; e++)
-				ih[n][e] *= RATE * delta[1][n] * i[n];
+				ih[n][e] = RATE * delta[1][n] * i[n];
 		
 		return variance;
 	}
