@@ -2,7 +2,6 @@
 	// Name        : back-prop.cpp
 	// Copyright   : BSDNew
 	// Description : A simple backprop program
-	//
 	//============================================================================
 
 // Remove and restructure delta code: apply error directly to nodes
