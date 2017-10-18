@@ -25,7 +25,7 @@ public class BackProp {
 	double[][] ho; 	// hidden-output edge weights	(mutable)
 	double[] o;    	// output activation            (mutable)
 	
-	double[] t;		// target value         (immutable)
+	double[] t;	// target value                 (immutable)
 
 	// fuck sigmoids, they're too complicated.
 	private double compress(double value) {
