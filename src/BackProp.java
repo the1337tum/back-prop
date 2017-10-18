@@ -75,7 +75,7 @@ public class BackProp {
 			for (int e = 0; e < o.length; e++)
 				ho[n][e] = RATE * delta[0][e] * h[n];
 		
-		// hidden error
+		// hidden error - TODO: apply new hidden node value
 		for (int n = 0; n < h.length; n++) {
 			delta[1][n] = 0;
 			for (int e = 0; e < o.length; e++)
