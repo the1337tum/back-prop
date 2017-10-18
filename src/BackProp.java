@@ -72,9 +72,10 @@ public class BackProp {
 		}
 		
 		// hidden-output error
-		for (int n = 0; n < h.length; n++)
+		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++)
 				ho[n][e] = RATE * delta[0][e] * h[n];
+		}
 		
 		// hidden error - TODO: apply new hidden node value
 		for (int n = 0; n < h.length; n++) {
@@ -85,9 +86,10 @@ public class BackProp {
 		}
 		
 		// input-hidden error
-		for (int n = 0; n < i.length; n++)
+		for (int n = 0; n < i.length; n++) {
 			for (int e = 0; e < h.length; e++)
 				ih[n][e] = RATE * delta[1][n] * i[n];
+		}
 		
 		return variance;
 	}
