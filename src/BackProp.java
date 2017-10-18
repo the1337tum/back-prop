@@ -81,7 +81,7 @@ public class BackProp {
 		for (int n = 0; n < h.length; n++) {
 			delta[1][n] = 0;
 			for (int e = 0; e < o.length; e++)
-				delta[1][n] += delta[0][e] * ho[n][e];
+				delta[1][n] += delta[0][e] * ho[n][e]; // should this be delta[1][n] += delta[0][n]?
 			delta[1][n] *= h[n] * (1 - h[n]);
 		}
 		
