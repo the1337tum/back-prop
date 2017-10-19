@@ -3,6 +3,7 @@
 	// Copyright   : BSDNew
 	// Description : A simple backprop program
 	//============================================================================
+        //https://www.google.com.au/search?q=relu+function
 
 // Remove and restructure delta code: apply error directly to nodes
 public class BackProp {
