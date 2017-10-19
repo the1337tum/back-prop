@@ -54,7 +54,7 @@ public class BackProp {
 		ho = new double[h_len][o_len];
 		for (int n = 0; n < h_len; n++)
 			for (int e = 0; e < o_len; e++)
-				ih[n][e] = -0.3 + Math.random()*0.6; // +/- 0.3
+				ho[n][e] = -0.3 + Math.random()*0.6; // +/- 0.3
 		
 		delta[0] = new double[o_len];
 		delta[1] = new double[h_len];
