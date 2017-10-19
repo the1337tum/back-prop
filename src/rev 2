@@ -88,15 +88,24 @@ public class BackProp {
 		
 		// output error
 		for (int n = 0; n < o.length; n++) {
-			//System.out.println(o[n] + " -> " + t[n]);
-			delta[0][n] = (t[n] - o[n]);
+			delta[0][n] = t[n] - o[n];
 			variance += 0.5 * (t[n] - o[n]) * (t[n] - o[n]);
+		
+			double difference = t[n] - o[n];	
+			/*
+			 * System.out.println("t[n]: " + t[n]);
+			 * System.out.println("o[n]: " + o[n]);
+			 * System.out.println("diff: " + difference);
+			 */
 		}
 		
 		// hidden-output error
 		for (int n = 0; n < h.length; n++)
 			for (int e = 0; e < o.length; e++) {
-				ho[n][e] += RATE * delta[0][e] * relu_decompress(o[e]);
+				double addition = RATE * delta[0][e] * relu_decompress(t[e]);
+				ho[n][e] += addition;
+				System.out.println("add: " + addition);
+				System.out.println("ho[n][e]: " + ho[n][e]);
 			}
 		
 		// hidden error - TODO: apply new hidden node value
