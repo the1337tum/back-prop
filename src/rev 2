@@ -95,15 +95,16 @@ public class BackProp {
 		
 		// hidden-output error
 		for (int n = 0; n < h.length; n++)
-			for (int e = 0; e < o.length; e++)
+			for (int e = 0; e < o.length; e++) {
 				ho[n][e] += RATE * delta[0][e] * relu_decompress(o[e]);
+			}
 		
 		// hidden error - TODO: apply new hidden node value
 		for (int n = 0; n < h.length; n++) {
 			double sum = 0;
 			for (int e = 0; e < o.length; e++)
 				sum += ho[n][e] * relu_decompress(t[e]);
-			delta[1][n] = sum - h[n];
+			delta[1][n] = relu_compress(sum) - h[n];
 		}
 		
 		// input-hidden error
@@ -120,9 +121,10 @@ public class BackProp {
     	// hidden activations
     	int sum = 0;
     	for (int e = 0; e < h.length; e++) {
-    		for (int n = 0; n < i.length; n++)
+    		for (int n = 0; n < i.length; n++) {
     			sum += i[n] * ih[n][e];   // ih[h_len][i_len]
-    		h[e] = relu_compress(sum);
+		}
+		h[e] = sum;
     	}
     	// output activations
     	sum = 0;
@@ -130,7 +132,6 @@ public class BackProp {
     		for (int n = 0; n < h.length; n++)
     			sum += h[n] * ho[n][e]; 
     		o[e] = sum;
-		System.out.println(o[e]);
     	}
     }
     
