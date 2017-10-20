@@ -35,14 +35,14 @@ public class BackProp {
 
 
 	private double relu_compress(double value) {
-		return Math.max(0, value);
+		return Math.max(0.001 * value, value);
 	}
 
 	private double relu_decompress(double value) {
 		if (value > 0) 
 			return 1;
 		else
-			return 0.01;
+			return 0.001;
 	}
 	
 	// n = node, e = edge
@@ -70,11 +70,11 @@ public class BackProp {
 		ih = new double[i_len][h_len];
 		for (int n = 0; n < i_len; n++)
 			for (int e = 0; e < h_len; e++)
-				ih[n][e] = Math.random()*0.3;
+				ih[n][e] = -0.3 * Math.random()*0.6;
 		ho = new double[h_len][o_len];
 		for (int n = 0; n < h_len; n++)
 			for (int e = 0; e < o_len; e++)
-				ho[n][e] = Math.random()*0.3;
+				ho[n][e] = -0.3 * Math.random()*0.6;
 		
 		delta[0] = new double[o_len];
 		delta[1] = new double[h_len];
@@ -88,38 +88,38 @@ public class BackProp {
 		
 		// output error
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = t[n] - o[n];
-			variance += 0.5 * (t[n] - o[n]) * (t[n] - o[n]);
-		
-			double difference = t[n] - o[n];	
-			/*
-			 * System.out.println("t[n]: " + t[n]);
-			 * System.out.println("o[n]: " + o[n]);
-			 * System.out.println("diff: " + difference);
-			 */
+			delta[0][n] = 0.5*(t[n] - o[n])*(t[n] - o[n]);
+			
+			System.out.println("delta[0]: " + delta[0][n]);
+			System.out.println("t[n]: " + t[n]);
+			System.out.println("o[n]: " + o[n]);
+			System.out.println();
+			
+			
 		}
 		
 		// hidden-output error
-		for (int n = 0; n < h.length; n++)
+		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				double addition = RATE * delta[0][e] * relu_decompress(t[e]);
-				ho[n][e] += addition;
-				System.out.println("add: " + addition);
-				System.out.println("ho[n][e]: " + ho[n][e]);
+				ho[n][e] -= delta[0][e];
+				//System.out.println("ho[n][e]: " + ho[n][e]);
 			}
+		}
 		
 		// hidden error - TODO: apply new hidden node value
 		for (int n = 0; n < h.length; n++) {
 			double sum = 0;
 			for (int e = 0; e < o.length; e++)
 				sum += ho[n][e] * relu_decompress(t[e]);
-			delta[1][n] = relu_compress(sum) - h[n];
+			h[n] = relu_compress(sum);
+			//System.out.println("delta[1] :" + delta[1][n]);
 		}
 		
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] += RATE * delta[1][n] * relu_decompress(h[e]);
+				ih[n][e] *= relu_decompress(h[e]);
+				ih[n][e] += RATE * h[n];
 			}
 		}
 		
