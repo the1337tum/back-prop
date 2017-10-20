@@ -133,14 +133,14 @@ public class BackProp {
     		for (int n = 0; n < i.length; n++) {
     			sum += i[n] * ih[n][e];   // ih[h_len][i_len]
 		}
-		h[e] = sum;
+		h[e] = relu_compress(sum);
     	}
     	// output activations
     	sum = 0;
     	for (int e = 0; e < o.length; e++) {
     		for (int n = 0; n < h.length; n++)
     			sum += h[n] * ho[n][e]; 
-    		o[e] = sum;
+    		o[e] = relu_compress(sum);
     	}
     }
     
