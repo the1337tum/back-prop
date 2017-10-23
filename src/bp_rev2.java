@@ -7,10 +7,9 @@
 	// https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
 	// https://www.youtube.com/watch?v=IHZwWFHWa-w
 	// https://stats.stackexchange.com/questions/185071/can-neural-network-e-g-convolutional-neural-network-have-negative-weights
-	// http://neuralnetworksanddeeplearning.com/chap2.html
 
 public class BackProp {
-	// Edges are initialised to values in the range +/a- 0.3
+	// Edges are initialised to values in the range +/- 0.3
 	double BIAS = 0.0;
 	double RATE = 0.6;
 	
@@ -66,10 +65,10 @@ public class BackProp {
 		// bias activations
 		h_bias = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h_bias[n] = 0.5 * Math.random();
+			h_bias[n] = -0.5 + Math.random();
 		o_bias = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o_bias[n] = 0.5 * Math.random();
+			o_bias[n] = -0.5 + Math.random();
 
 		// edge activations
 		ih = new double[i_len][h_len];
@@ -92,7 +91,7 @@ public class BackProp {
 		
 		// output error
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = (t[n] - o[n]) * derivative(t[n]);
+			delta[0][n] = (t[n] - o[n]) * derivative(o[n]);
 			error += delta[0][n];
 		}
 		
@@ -108,7 +107,7 @@ public class BackProp {
 		double[] h_bp = new double[h.length];
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				delta[1][e] = h[e] * ho[n][e];
+				delta[1][e] = h[e] * ho[n][e] * derivative(h[e]);
 				h_bias[e] -= delta[1][e] / error;
 			}
 		}
@@ -130,14 +129,14 @@ public class BackProp {
     		for (int n = 0; n < i.length; n++) {
     			sum += i[n] * ih[n][e];   // ih[h_len][i_len]
 		}
-		h[e] = activate(sum);
+		h[e] = activate(sum) + h_bias[e];
     	}
     	// output activations
     	sum = 0;
     	for (int e = 0; e < o.length; e++) {
     		for (int n = 0; n < h.length; n++)
     			sum += h[n] * ho[n][e]; 
-    		o[e] = activate(sum);
+    		o[e] = activate(sum) + o_bias[e];
     	}
     }
     
