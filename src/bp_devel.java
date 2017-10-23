@@ -88,7 +88,7 @@ public class BackProp {
 		
 		// output error
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = 0.5*(t[n] - o[n])*(t[n] - o[n]);
+			delta[0][n] = RATE * (t[n] - o[n])*(t[n] - o[n]);
 		}
 		
 		// hidden-output error
@@ -105,7 +105,7 @@ public class BackProp {
 			for (int e = 0; e < o.length; e++)
 				sum += ho[n][e] * relu_decompress(t[e]);
 			h_bp[n] = relu_compress(sum);
-			delta[1][n] = 0.5*(h_bp[n] - h[n])*(h_bp[n] - h[n]);
+			delta[1][n] = RATE * (h_bp[n] - h[n])*(h_bp[n] - h[n]);
 		}
 		
 		// input-hidden error
