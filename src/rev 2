@@ -89,37 +89,29 @@ public class BackProp {
 		// output error
 		for (int n = 0; n < o.length; n++) {
 			delta[0][n] = 0.5*(t[n] - o[n])*(t[n] - o[n]);
-			
-			System.out.println("delta[0]: " + delta[0][n]);
-			System.out.println("t[n]: " + t[n]);
-			System.out.println("o[n]: " + o[n]);
-			System.out.println();
-			
-			
 		}
 		
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
 				ho[n][e] -= delta[0][e];
-				//System.out.println("ho[n][e]: " + ho[n][e]);
 			}
 		}
 		
 		// hidden error - TODO: apply new hidden node value
+		double h_bp[h.length];
 		for (int n = 0; n < h.length; n++) {
 			double sum = 0;
 			for (int e = 0; e < o.length; e++)
 				sum += ho[n][e] * relu_decompress(t[e]);
-			h[n] = relu_compress(sum);
-			//System.out.println("delta[1] :" + delta[1][n]);
+			h_bp[n] = relu_compress(sum);
+			delta[1][n] = 0.5*(h_bp[n] - h[n])*(h_bp[n] - h[n]);
 		}
 		
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] *= relu_decompress(h[e]);
-				ih[n][e] += RATE * h[n];
+				ih[n][e] -= delta[1][n];
 			}
 		}
 		
