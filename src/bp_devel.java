@@ -98,7 +98,7 @@ public class BackProp {
 		}
 		
 		// hidden error
-		double h_bp[h.length];
+		double[] h_bp = new double[h.length];
 		for (int n = 0; n < h.length; n++) {
 			double sum = 0;
 			for (int e = 0; e < o.length; e++)
