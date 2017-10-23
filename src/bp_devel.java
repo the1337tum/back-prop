@@ -5,9 +5,8 @@
 	//============================================================================
         // http://mochajl.readthedocs.io/en/latest/user-guide/neuron.html
 	// https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
-	// Missing Neuron Bias
+	// https://www.youtube.com/watch?v=IHZwWFHWa-w
 
-// Remove and restructure delta code: apply error directly to nodes
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
 	double BIAS = 0.0;
