@@ -6,6 +6,7 @@
         // http://mochajl.readthedocs.io/en/latest/user-guide/neuron.html
 	// https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
 	// https://www.youtube.com/watch?v=IHZwWFHWa-w
+	// https://stats.stackexchange.com/questions/185071/can-neural-network-e-g-convolutional-neural-network-have-negative-weights
 
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
