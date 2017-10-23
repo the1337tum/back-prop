@@ -61,10 +61,10 @@ public class BackProp {
 		// bias activations
 		h_bias = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h_bias[n] = 1.0;
+			h_bias[n] = 0.5 * Math.random();
 		o_bias = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o_bias[n] = 1.0;
+			o_bias[n] = 0.5 * Math.random();
 
 		// edge activations
 		ih = new double[i_len][h_len];
