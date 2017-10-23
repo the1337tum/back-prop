@@ -82,7 +82,6 @@ public class BackProp {
 
 	// delta[0] = output delta
 	// delta[1] = hidden delta
-	// edges += or just = ?
 	double back_prop() {
 		double variance = 0.0;
 		
