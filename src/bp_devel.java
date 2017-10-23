@@ -98,7 +98,7 @@ public class BackProp {
 			}
 		}
 		
-		// hidden error - TODO: apply new hidden node value
+		// hidden error
 		double h_bp[h.length];
 		for (int n = 0; n < h.length; n++) {
 			double sum = 0;
