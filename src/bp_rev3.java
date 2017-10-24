@@ -92,7 +92,7 @@ public class BackProp {
 		
 		// output error
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = (t[n] - o[n]) * derivative(o[n]);
+			delta[0][n] = (o[n] - t[n]) * derivative(o[n]);
 			error += delta[0][n];
 			System.out.println("o[n]: " + o[n]);
 			// System.out.println("delta: " + delta[0][n]);
@@ -112,7 +112,7 @@ public class BackProp {
 			for (int e = 0; e < o.length; e++) {
 				sum += o[e] * ho[n][e];
 			}
-			delta[1][n] = (activate(sum) - h[n]) * derivative(h[n]);
+			delta[1][n] = (h[n] - activate(sum)) * derivative(h[n]);
 			System.out.println("delta[1][n]: " + delta[1][n]);
 		}
 		
@@ -120,6 +120,7 @@ public class BackProp {
 		for (int n = 0; n < i.length; n++) {
 			for (int e = 0; e < h.length; e++) {
 				ih[n][e] -= delta[1][e];
+				System.out.println("ih[n][e]: " +ih[n][e] );
 			}
 		}
 		
