@@ -36,13 +36,13 @@ public class BackProp {
 
 
 	private double activate(double value) {
-		return 1 / (1 + Math.exp(-value));
+		return 1.0 / (1.0 + Math.exp(-value));
 		// ReLU Activation
 		// return Math.max(0.001 * value, value);
 	}
 
 	private double derivative(double value) {
-		return value * (1 - value);
+		return value * (1.0 - value);
 		// ReLU Derivative
 		// if (value > 0) 
 		// 	return 1;
@@ -88,21 +88,16 @@ public class BackProp {
 	// delta[0] = output delta
 	// delta[1] = hidden delta
 	double back_prop() {
-		double error = 0.0;
-		
 		// output error
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = (o[n] - t[n]) * derivative(o[n]);
-			error += delta[0][n];
-			System.out.println("o[n]: " + o[n]);
-			// System.out.println("delta: " + delta[0][n]);
+			delta[0][n] = (t[n] - o[n]) * derivative(o[n]);
+			o_bias[n] -= RATE * delta[n][0];
 		}
-		
+
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				ho[n][e] -= delta[0][e] * o[e];
-				o_bias[e] -= delta[0][e] / error;
+				ho[n][e] -= RATE * delta[0][e] * o[e];
 			}
 		}
 		
@@ -112,19 +107,17 @@ public class BackProp {
 			for (int e = 0; e < o.length; e++) {
 				sum += o[e] * ho[n][e];
 			}
-			delta[1][n] = (h[n] - activate(sum)) * derivative(h[n]);
-			System.out.println("delta[1][n]: " + delta[1][n]);
+			delta[1][n] = sum * derivative(h[n]);
+			h_bias[n] -= RATE * delta[1][n];
 		}
 		
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= delta[1][e];
-				System.out.println("ih[n][e]: " +ih[n][e] );
+				ih[n][e] -= RATE * delta[1][e] * h[e];
 			}
 		}
-		
-		return error;
+		return 0.0;
 	}
 
     void push_forward() {
@@ -132,15 +125,16 @@ public class BackProp {
     	double sum = 0;
     	for (int e = 0; e < h.length; e++) {
     		for (int n = 0; n < i.length; n++) {
-    			sum += i[n] * ih[n][e] - h_bias[e];   // ih[h_len][i_len]
+    			sum += i[n] * ih[n][e] + h_bias[e];   // ih[h_len][i_len]
 		}
 		h[e] = activate(sum);
     	}
     	// output activations
     	sum = 0;
     	for (int e = 0; e < o.length; e++) {
-    		for (int n = 0; n < h.length; n++)
-    			sum += h[n] * ho[n][e] - o_bias[e]; 
+    		for (int n = 0; n < h.length; n++) {
+			sum += h[n] * ho[n][e] + o_bias[e];
+		}
     		o[e] = activate(sum);
     	}
     }
