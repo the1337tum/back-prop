@@ -129,7 +129,7 @@ public class BackProp {
 
     void push_forward() {
     	// hidden activations
-    	int sum = 0;
+    	double sum = 0;
     	for (int e = 0; e < h.length; e++) {
     		for (int n = 0; n < i.length; n++) {
     			sum += i[n] * ih[n][e] - h_bias[e];   // ih[h_len][i_len]
