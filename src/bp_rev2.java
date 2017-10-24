@@ -75,11 +75,11 @@ public class BackProp {
 		ih = new double[i_len][h_len];
 		for (int n = 0; n < i_len; n++)
 			for (int e = 0; e < h_len; e++)
-				ih[n][e] = -0.3 * Math.random()*0.6;
+				ih[n][e] = -0.5 + Math.random();
 		ho = new double[h_len][o_len];
 		for (int n = 0; n < h_len; n++)
 			for (int e = 0; e < o_len; e++)
-				ho[n][e] = -0.3 * Math.random()*0.6;
+				ho[n][e] = -0.5 + Math.random();
 		
 		delta[0] = new double[o_len];
 		delta[1] = new double[h_len];
@@ -94,6 +94,8 @@ public class BackProp {
 		for (int n = 0; n < o.length; n++) {
 			delta[0][n] = (t[n] - o[n]) * derivative(o[n]);
 			error += delta[0][n];
+			System.out.println("o[n]: " + o[n]);
+			// System.out.println("delta: " + delta[0][n]);
 		}
 		
 		// hidden-output error
@@ -105,18 +107,19 @@ public class BackProp {
 		}
 		
 		// hidden error
-		double[] h_bp = new double[h.length];
+		double sum = 0;
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				delta[1][e] = h[e] * ho[n][e] * derivative(h[e]);
-				h_bias[e] -= delta[1][e] / error;
+				sum += h[e] * ho[n][e];
 			}
+			delta[1][n] = derivative(sum);
+			System.out.println("delta[1][n]: " + delta[1][n]);
 		}
 		
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= delta[1][e] * h[e];
+				ih[n][e] -= delta[1][e];
 			}
 		}
 		
@@ -128,16 +131,16 @@ public class BackProp {
     	int sum = 0;
     	for (int e = 0; e < h.length; e++) {
     		for (int n = 0; n < i.length; n++) {
-    			sum += i[n] * ih[n][e];   // ih[h_len][i_len]
+    			sum += i[n] * ih[n][e] - h_bias[e];   // ih[h_len][i_len]
 		}
-		h[e] = activate(sum) + h_bias[e];
+		h[e] = activate(sum);
     	}
     	// output activations
     	sum = 0;
     	for (int e = 0; e < o.length; e++) {
     		for (int n = 0; n < h.length; n++)
-    			sum += h[n] * ho[n][e]; 
-    		o[e] = activate(sum) + o_bias[e];
+    			sum += h[n] * ho[n][e] - o_bias[e]; 
+    		o[e] = activate(sum);
     	}
     }
     
