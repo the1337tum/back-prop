@@ -8,7 +8,6 @@
 	// https://www.youtube.com/watch?v=IHZwWFHWa-w
 	// https://stats.stackexchange.com/questions/185071/can-neural-network-e-g-convolutional-neural-network-have-negative-weights
 	// http://neuralnetworksanddeeplearning.com/chap2.html
-	// http://www.jefkine.com/general/2016/09/05/backpropagation-in-convolutional-neural-networks/
 	// https://www.youtube.com/watch?v=L_PByyJ9g-I
 
 public class BackProp {
@@ -47,7 +46,7 @@ public class BackProp {
 		return value * (1.0 - value);
 		// ReLU Derivative
 		// if (value > 0) 
-		// 	return 1;
+		//	return 1;
 		// else
 		//	return 0.001;
 	}
@@ -68,20 +67,20 @@ public class BackProp {
 		// bias activations
 		h_bias = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h_bias[n] = -0.5 + Math.random();
+			h_bias[n] = -10.5 + Math.random() * 20;
 		o_bias = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o_bias[n] = -0.5 + Math.random();
+			o_bias[n] = -10.5 + Math.random() * 20;
 
 		// edge activations
 		ih = new double[i_len][h_len];
 		for (int n = 0; n < i_len; n++)
 			for (int e = 0; e < h_len; e++)
-				ih[n][e] = -0.5 + Math.random();
+				ih[n][e] = -10 + Math.random() * 20;
 		ho = new double[h_len][o_len];
 		for (int n = 0; n < h_len; n++)
 			for (int e = 0; e < o_len; e++)
-				ho[n][e] = -0.5 + Math.random();
+				ho[n][e] = -10 + Math.random() * 20;
 		
 		delta[0] = new double[o_len];
 		delta[1] = new double[h_len];
@@ -92,31 +91,34 @@ public class BackProp {
 	double back_prop() {
 		// output error
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = (t[n] - o[n]) * derivative(o[n]);
+			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
 			o_bias[n] -= RATE * delta[n][0];
+			// System.out.println(o[n]);
+			// System.out.println(o_bias[n]);
 		}
 
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				ho[n][e] -= RATE * delta[0][e] * o[e];
+				ho[n][e] -= RATE * delta[0][e] * h[n];
+				System.out.println(ho[n][e]);
 			}
 		}
 		
 		// hidden error
 		double sum = 0;
-		for (int n = 0; n < h.length; n++) {
-			for (int e = 0; e < o.length; e++) {
-				sum += o[e] * ho[n][e];
+		for (int e = 0; e < h.length; e++) {
+			for (int n = 0; n < o.length; n++) {
+				sum += delta[0][n] * ho[e][n];
 			}
-			delta[1][n] = sum * derivative(h[n]);
-			h_bias[n] -= RATE * delta[1][n];
+			delta[1][e] = sum * derivative(h[e]);
 		}
 		
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
+			h_bias[n] -= RATE * delta[1][n];
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= RATE * delta[1][e] * h[e];
+				ih[n][e] -= RATE * delta[1][e] * i[n];
 			}
 		}
 		return 0.0;
@@ -127,17 +129,17 @@ public class BackProp {
     	double sum = 0;
     	for (int e = 0; e < h.length; e++) {
     		for (int n = 0; n < i.length; n++) {
-    			sum += i[n] * ih[n][e] + h_bias[e];   // ih[h_len][i_len]
+    			sum += i[n] * ih[n][e];
 		}
-		h[e] = activate(sum);
+		h[e] = activate(sum + h_bias[e]);
     	}
     	// output activations
     	sum = 0;
     	for (int e = 0; e < o.length; e++) {
     		for (int n = 0; n < h.length; n++) {
-			sum += h[n] * ho[n][e] + o_bias[e];
+			sum += h[n] * ho[n][e];
 		}
-    		o[e] = activate(sum);
+    		o[e] = activate(sum + o_bias[e]);
     	}
     }
     
