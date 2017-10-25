@@ -9,6 +9,7 @@
 	// https://stats.stackexchange.com/questions/185071/can-neural-network-e-g-convolutional-neural-network-have-negative-weights
 	// http://neuralnetworksanddeeplearning.com/chap2.html
 	// http://www.jefkine.com/general/2016/09/05/backpropagation-in-convolutional-neural-networks/
+	// https://www.youtube.com/watch?v=L_PByyJ9g-I
 
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
