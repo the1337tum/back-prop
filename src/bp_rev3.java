@@ -13,7 +13,7 @@
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
 	double BIAS = 0.0;
-	double RATE = 0.6;
+	double RATE = 0.001;
 	
 	// a flip-flop array; to extend the propagation to multiple hidden layers
 	double[][] delta = new double[2][];
@@ -43,7 +43,7 @@ public class BackProp {
 	}
 
 	private double derivative(double value) {
-		return value * (1.0 - value);
+		return activate(value) * (1.0 - activate(value));
 		// ReLU Derivative
 		// if (value > 0) 
 		//	return 1;
@@ -76,11 +76,11 @@ public class BackProp {
 		ih = new double[i_len][h_len];
 		for (int n = 0; n < i_len; n++)
 			for (int e = 0; e < h_len; e++)
-				ih[n][e] = -10 + Math.random() * 20;
+				ih[n][e] = -0.5 + Math.random() * 2;
 		ho = new double[h_len][o_len];
 		for (int n = 0; n < h_len; n++)
 			for (int e = 0; e < o_len; e++)
-				ho[n][e] = -10 + Math.random() * 20;
+				ho[n][e] = -0.5 + Math.random() * 2;
 		
 		delta[0] = new double[o_len];
 		delta[1] = new double[h_len];
@@ -90,35 +90,39 @@ public class BackProp {
 	// delta[1] = hidden delta
 	double back_prop() {
 		// output error
+		double o_error = 0.0;
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
-			o_bias[n] -= RATE * delta[n][0];
-			// System.out.println(o[n]);
-			// System.out.println(o_bias[n]);
-		}
+			delta[0][n] = -(t[n] - o[n])  * derivative(o[n]);
+			o_error += Math.abs(delta[0][n]);
+		} // make delta proportionate to the total error
+		for (int n = 0; n < o.length; n++)
+			delta[0][n] /= o_error;
 
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				ho[n][e] -= RATE * delta[0][e] * h[n];
-				System.out.println(ho[n][e]);
+				ho[n][e] -= RATE * delta[0][e] * o[e];
 			}
 		}
 		
 		// hidden error
 		double sum = 0;
+		double h_error = 0.0;
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				sum += delta[0][e] * ho[n][e];
+				sum += delta[0][e]  * ho[n][e];
 			}
 			delta[1][n] = sum * derivative(h[n]);
-		}
+			h_error += Math.abs(delta[1][n]);
+		} // make delta proportionate to total error
+		for (int n = 0; n < h.length; n++)
+			delta[1][n] /= h_error;
 		
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
 			h_bias[n] -= RATE * delta[1][n];
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= RATE * delta[1][e] * i[n];
+				ih[n][e] -= RATE * delta[1][e] * h[e];
 			}
 		}
 		return 0.0;
@@ -179,8 +183,8 @@ public class BackProp {
 				{{1,1}, {0}}
 		};
 		
-		BackProp n = new BackProp(2,3,1);
-		n.train(patterns, 10000);
+		BackProp n = new BackProp(2,2,1);
+		n.train(patterns, 100000);
 		n.test(patterns);
 		
 	}
