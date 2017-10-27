@@ -106,9 +106,9 @@ public class BackProp {
 		}
 		
 		// hidden error
-		double sum = 0;
 		double h_error = 0.0;
 		for (int n = 0; n < h.length; n++) {
+			double sum = 0;
 			for (int e = 0; e < o.length; e++) {
 				sum += delta[0][e]  * ho[n][e];
 			}
