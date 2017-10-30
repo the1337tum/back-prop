@@ -13,7 +13,7 @@
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
 	double BIAS = 0.0;
-	double RATE = 0.001;
+	double RATE = 0.6;
 	
 	// a flip-flop array; to extend the propagation to multiple hidden layers
 	double[][] delta = new double[2][];
@@ -60,15 +60,12 @@ public class BackProp {
 	// n = node, e = edge
 	BackProp(int i_len, int h_len, int o_len) {
 		// node activations
-		i = new double[i_len];
-		for (int n = 0; n < i_len; n++)
-			i[n] = 1;//-1.0 + Math.random() * 2;
 		h = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h[n] = 1;//-1.0 + Math.random() * 2;
+			h[n] = -1.0 + Math.random() * 2;
 		o = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o[n] = 1;//-1.0 + Math.random() * 2;
+			o[n] = -1.0 + Math.random() * 2;
 
 		// bias activations
 		h_bias = new double[h_len];
@@ -186,7 +183,7 @@ public class BackProp {
 		};
 		
 		BackProp n = new BackProp(2,2,1);
-		n.train(patterns, 100000);
+		n.train(patterns, 10000);
 		n.test(patterns);
 		
 	}
