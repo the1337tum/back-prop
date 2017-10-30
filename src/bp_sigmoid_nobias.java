@@ -3,13 +3,15 @@
 	// Copyright   : BSDNew
 	// Description : A simple backprop program
 	//============================================================================
-        // http://mochajl.readthedocs.io/en/latest/user-guide/neuron.html
-	// https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
-	// https://www.youtube.com/watch?v=IHZwWFHWa-w
-	// https://stats.stackexchange.com/questions/185071/can-neural-network-e-g-convolutional-neural-network-have-negative-weights
-	// http://neuralnetworksanddeeplearning.com/chap2.html
-	// https://www.youtube.com/watch?v=L_PByyJ9g-I
+	// Theory
 	// https://www.youtube.com/watch?list=PLkt2uSq6rBVctENoVBg1TpCC7OQi31AlC&time_continue=1&v=i94OvYb6noo
+
+	// Worked Example:
+	// https://www.youtube.com/watch?v=L_PByyJ9g-I
+
+	// Tensors:
+	// https://www.youtube.com/watch?v=f5liqUk0ZTw
+
 
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
