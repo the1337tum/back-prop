@@ -37,13 +37,19 @@ public class BackProp {
 
 
 	private double activate(double value) {
-		return 1.0 / (1.0 + Math.exp(-value));
+		// Tanh Activation
+		return Math.tanh(value);
+		// Sigmoid Activation
+		// return 1.0 / (1.0 + Math.exp(-value));
 		// ReLU Activation
 		// return Math.max(0.001 * value, value);
 	}
 
 	private double derivative(double value) {
-		return activate(value) * (1.0 - activate(value));
+		// Tanh Derivative
+		return 1 - Math.pow(value, 2);
+		// Sigmoid Derivative
+		// return activate(value) * (1.0 - activate(value));
 		// ReLU Derivative
 		// if (value > 0) 
 		//	return 1;
@@ -56,21 +62,21 @@ public class BackProp {
 		// node activations
 		i = new double[i_len];
 		for (int n = 0; n < i_len; n++)
-			i[n] = 1.0;
+			i[n] = 1;//-1.0 + Math.random() * 2;
 		h = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h[n] = 1.0;
+			h[n] = 1;//-1.0 + Math.random() * 2;
 		o = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o[n] = 1.0;
+			o[n] = 1;//-1.0 + Math.random() * 2;
 
 		// bias activations
 		h_bias = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h_bias[n] = -10.5 + Math.random() * 20;
+			h_bias[n] = 0;//-10.5 + Math.random() * 20;
 		o_bias = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o_bias[n] = -10.5 + Math.random() * 20;
+			o_bias[n] = 0;//-10.5 + Math.random() * 20;
 
 		// edge activations
 		ih = new double[i_len][h_len];
@@ -99,7 +105,7 @@ public class BackProp {
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				ho[n][e] -= RATE * delta[0][e];
+				ho[n][e] -= RATE * delta[0][e] * h[n];
 			}
 		}
 		
@@ -116,9 +122,9 @@ public class BackProp {
 
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
-			h_bias[n] -= RATE * delta[1][n];
+			// h_bias[n] -= RATE * delta[1][n];
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= RATE * delta[1][e] * i[n];
+				ih[n][e] -= RATE * delta[1][e] * activate(i[n]);
 			}
 		}
 		return 0.0;
