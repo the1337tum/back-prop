@@ -23,9 +23,9 @@ public class BackProp {
 	
 	// Edges are linked to the target, not the origin:
 	//  ...
-	//  e \
-	//  e -n
-	//  e /
+	//   / e
+	//  n- e
+	//   \ e
 	//  ... 
 	double[] i;    	// input value                  (immutable)
 	double[][] ih; 	// input-hidden edge weights    (mutable)
