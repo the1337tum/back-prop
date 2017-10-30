@@ -36,27 +36,6 @@ public class BackProp {
 	double[] t;	// target value                 (immutable)
 
 
-	private double activate(double value) {
-		// Tanh Activation
-		return Math.tanh(value);
-		// Sigmoid Activation
-		// return 1.0 / (1.0 + Math.exp(-value));
-		// ReLU Activation
-		// return Math.max(0.001 * value, value);
-	}
-
-	private double derivative(double value) {
-		// Tanh Derivative
-		return 1 - Math.pow(value, 2);
-		// Sigmoid Derivative
-		// return activate(value) * (1.0 - activate(value));
-		// ReLU Derivative
-		// if (value > 0) 
-		//	return 1;
-		// else
-		//	return 0.001;
-	}
-	
 	// n = node, e = edge
 	BackProp(int i_len, int h_len, int o_len) {
 		// node activations
@@ -89,14 +68,33 @@ public class BackProp {
 		delta[1] = new double[h_len];
 	}
 
+	private double activate(double value) {
+		// Tanh Activation
+		return Math.tanh(value);
+		// Sigmoid Activation
+		// return 1.0 / (1.0 + Math.exp(-value));
+		// ReLU Activation
+		// return Math.max(0.001 * value, value);
+	}
+
+	private double derivative(double value) {
+		// Tanh Derivative
+		return 1 - Math.pow(value, 2);
+		// Sigmoid Derivative
+		// return activate(value) * (1.0 - activate(value));
+		// ReLU Derivative
+		// if (value > 0) 
+		//	return 1;
+		// else
+		//	return 0.001;
+	}
+	
 	// delta[0] = output delta
 	// delta[1] = hidden delta
 	double back_prop() {
 		// output error
-		double o_error = 0.0;
 		for (int n = 0; n < o.length; n++) {
 			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
-			o_error += Math.abs(delta[0][n]);
 		}
 
 		// hidden-output error
@@ -107,19 +105,16 @@ public class BackProp {
 		}
 		
 		// hidden error
-		double h_error = 0.0;
 		for (int n = 0; n < h.length; n++) {
 			double sum = 0;
 			for (int e = 0; e < o.length; e++) {
 				sum += delta[0][e] * ho[n][e];
 			}
 			delta[1][n] = sum * derivative(h[n]);
-			h_error += Math.abs(delta[1][n]);
 		}
 
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
-			// h_bias[n] -= RATE * delta[1][n];
 			for (int e = 0; e < h.length; e++) {
 				ih[n][e] -= RATE * delta[1][e] * activate(i[n]);
 			}
