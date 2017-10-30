@@ -108,9 +108,9 @@ public class BackProp {
 		for (int n = 0; n < h.length; n++) {
 			double sum = 0;
 			for (int e = 0; e < o.length; e++) {
-				sum += delta[0][e]  * ho[n][e];
+				sum += delta[0][e] * ho[n][e];
 			}
-			delta[1][n] = sum * derivative(h[n]);
+			delta[1][n] = sum * (1 - Math.pow(h[n], 2));
 			h_error += Math.abs(delta[1][n]);
 		}
 
@@ -118,7 +118,7 @@ public class BackProp {
 		for (int n = 0; n < i.length; n++) {
 			h_bias[n] -= RATE * delta[1][n];
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= RATE * delta[1][e];
+				ih[n][e] -= RATE * delta[1][e] * i[n];
 			}
 		}
 		return 0.0;
