@@ -92,16 +92,14 @@ public class BackProp {
 		// output error
 		double o_error = 0.0;
 		for (int n = 0; n < o.length; n++) {
-			delta[0][n] = -(t[n] - o[n])  * derivative(o[n]);
+			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
 			o_error += Math.abs(delta[0][n]);
-		} // make delta proportionate to the total error
-		for (int n = 0; n < o.length; n++)
-			delta[0][n] /= o_error;
+		}
 
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
 			for (int e = 0; e < o.length; e++) {
-				ho[n][e] -= RATE * delta[0][e] * o[e];
+				ho[n][e] -= RATE * delta[0][e];
 			}
 		}
 		
@@ -114,15 +112,13 @@ public class BackProp {
 			}
 			delta[1][n] = sum * derivative(h[n]);
 			h_error += Math.abs(delta[1][n]);
-		} // make delta proportionate to total error
-		for (int n = 0; n < h.length; n++)
-			delta[1][n] /= h_error;
-		
+		}
+
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
 			h_bias[n] -= RATE * delta[1][n];
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= RATE * delta[1][e] * h[e];
+				ih[n][e] -= RATE * delta[1][e];
 			}
 		}
 		return 0.0;
