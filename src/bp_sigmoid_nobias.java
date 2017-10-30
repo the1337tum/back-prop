@@ -73,9 +73,11 @@ public class BackProp {
 
 	private double activate(double value) {
 		// Tanh Activation
-		//return Math.tanh(value);
+		// return Math.tanh(value);
+		
 		// Sigmoid Activation
 		return 1.0 / (1.0 + Math.exp(-value));
+		
 		// ReLU Activation
 		// return Math.max(0.001 * value, value);
 	}
@@ -83,8 +85,10 @@ public class BackProp {
 	private double derivative(double value) {
 		// Tanh Derivative
 		//return 1 - Math.pow(value, 2);
+		
 		// Sigmoid Derivative
 		return value * (1.0 - value);
+		
 		// ReLU Derivative
 		// if (value > 0) 
 		//	return 1;
