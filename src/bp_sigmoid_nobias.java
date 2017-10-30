@@ -10,6 +10,9 @@
 	// http://neuralnetworksanddeeplearning.com/chap2.html
 	// https://www.youtube.com/watch?v=L_PByyJ9g-I
 
+	// Background Reading
+	// https://medium.com/towards-data-science/introducing-deep-learning-and-neural-networks-deep-learning-for-rookies-1-bd68f9cf5883
+
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
 	double BIAS = 0.0;
