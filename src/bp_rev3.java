@@ -110,7 +110,7 @@ public class BackProp {
 			for (int e = 0; e < o.length; e++) {
 				sum += delta[0][e] * ho[n][e];
 			}
-			delta[1][n] = sum * (1 - Math.pow(h[n], 2));
+			delta[1][n] = sum * derivative(h[n]);
 			h_error += Math.abs(delta[1][n]);
 		}
 
