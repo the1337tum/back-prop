@@ -116,7 +116,7 @@ public class BackProp {
 		// input-hidden error
 		for (int n = 0; n < i.length; n++) {
 			for (int e = 0; e < h.length; e++) {
-				ih[n][e] -= RATE * delta[1][e] * activate(i[n]);
+				ih[n][e] -= RATE * delta[1][e] * i[n];
 			}
 		}
 		return 0.0;
