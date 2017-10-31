@@ -21,7 +21,7 @@ public class BackProp {
 	// a flip-flop array; to extend the propagation to multiple hidden layers
 	double[][] delta = new double[2][];
 	
-	// Edges are linked to the target, not the origin:
+	// Edges are linked to the origin, not the target:
 	//  ...
 	//   /e
 	//  n-e
