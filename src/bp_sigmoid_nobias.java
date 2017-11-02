@@ -41,7 +41,7 @@ public class BackProp {
 
 	// n = node, e = edge
 	BackProp(int i_len, int h_len, int o_len) {
-		// create network nodes
+		// create training nodes
 		h = new double[h_len];
 		o = new double[o_len];
 
