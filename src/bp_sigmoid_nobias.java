@@ -41,7 +41,7 @@ public class BackProp {
 
 	// n = node, e = edge
 	BackProp(int i_len, int h_len, int o_len) {
-		// create mutable nodes
+		// create network nodes
 		h = new double[h_len];
 		o = new double[o_len];
 
@@ -98,7 +98,7 @@ public class BackProp {
 		// output error
 		for (int n = 0; n < o.length; n++) {
 			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
-			o_bias[n] -= delta[0][n];
+			o_bias[n] -= RATE * delta[0][n];
 		}
 
 		// hidden-output error
@@ -115,7 +115,7 @@ public class BackProp {
 				sum += delta[0][e] * ho[n][e];
 			}
 			delta[1][n] = sum * derivative(h[n]);
-			h_bias[n] -= delta[1][n];
+			h_bias[n] -= RATE * delta[1][n];
 		}
 
 		// input-hidden error
@@ -183,7 +183,7 @@ public class BackProp {
 		};
 		
 		BackProp n = new BackProp(2,2,1);
-		n.train(patterns, 100000);
+		n.train(patterns, 1000000);
 		n.test(patterns);
 		
 	}
