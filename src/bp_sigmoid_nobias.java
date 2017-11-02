@@ -41,13 +41,9 @@ public class BackProp {
 
 	// n = node, e = edge
 	BackProp(int i_len, int h_len, int o_len) {
-		// node activations
+		// create network nodes
 		h = new double[h_len];
-		for (int n = 0; n < h_len; n++)
-			h[n] = 1.0;
 		o = new double[o_len];
-		for (int n = 0; n < o_len; n++)
-			o[n] = 1.0;
 
 		// bias activations
 		h_bias = new double[h_len];
