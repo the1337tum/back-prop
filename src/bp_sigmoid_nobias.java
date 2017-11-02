@@ -15,8 +15,8 @@
 
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
-	double BIAS = 0.0;
-	double RATE = 0.6;
+	double RATE = 0.6; // slope of gradient decent
+	double BIAS = 1;   // +/- starting node bias
 	
 	// a flip-flop array; to extend the propagation to multiple hidden layers
 	double[][] delta = new double[2][];
@@ -44,18 +44,18 @@ public class BackProp {
 		// node activations
 		h = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h[n] = -1.0 + Math.random() * 2;
+			h[n] = 1.0;
 		o = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o[n] = -1.0 + Math.random() * 2;
+			o[n] = 1.0;
 
 		// bias activations
 		h_bias = new double[h_len];
 		for (int n = 0; n < h_len; n++)
-			h_bias[n] = 0;//-10.5 + Math.random() * 20;
+			h_bias[n] = -BIAS + Math.random() * BIAS * 2;
 		o_bias = new double[o_len];
 		for (int n = 0; n < o_len; n++)
-			o_bias[n] = 0;//-10.5 + Math.random() * 20;
+			o_bias[n] = -BIAS + Math.random() * BIAS * 2;
 
 		// edge activations
 		ih = new double[i_len][h_len];
