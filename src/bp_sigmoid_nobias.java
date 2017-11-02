@@ -61,11 +61,11 @@ public class BackProp {
 		ih = new double[i_len][h_len];
 		for (int n = 0; n < i_len; n++)
 			for (int e = 0; e < h_len; e++)
-				ih[n][e] = -0.5 + Math.random() * 2;
+				ih[n][e] = -1.0 + Math.random() * 2;
 		ho = new double[h_len][o_len];
 		for (int n = 0; n < h_len; n++)
 			for (int e = 0; e < o_len; e++)
-				ho[n][e] = -0.5 + Math.random() * 2;
+				ho[n][e] = -1.0 + Math.random() * 2;
 		
 		delta[0] = new double[o_len];
 		delta[1] = new double[h_len];
