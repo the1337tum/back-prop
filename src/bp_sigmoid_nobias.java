@@ -18,7 +18,7 @@ public class BackProp {
 	double RATE = 0.6; // slope of gradient decent
 	double BIAS = 1;   // +/- starting node bias
 	
-	// a flip-flop array; to extend the propagation to multiple hidden layers
+	// an array of correction deltas used for back propagation, starting from the output layer
 	double[][] delta = new double[2][];
 	
 	// Edges are linked to the origin, not the target:
