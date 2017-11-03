@@ -151,7 +151,7 @@ public class BackProp {
     			i = patterns[p][0];
     			t = patterns[p][1];
     			push_forward();
-    			error = back_prop();
+    			back_prop();
     		}
     	}
     }
