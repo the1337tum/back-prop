@@ -12,7 +12,6 @@
 	// Tensors:
 	// https://www.youtube.com/watch?v=f5liqUk0ZTw
 
-
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
 	double RATE = 0.6; // slope of gradient decent
