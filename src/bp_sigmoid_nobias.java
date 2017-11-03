@@ -93,7 +93,7 @@ public class BackProp {
 	
 	// delta[0] = output delta
 	// delta[1] = hidden delta
-	double back_prop() {
+	void back_prop() {
 		// output error
 		for (int n = 0; n < o.length; n++) {
 			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
@@ -123,7 +123,6 @@ public class BackProp {
 				ih[n][e] -= RATE * delta[1][e] * i[n];
 			}
 		}
-		return 0.0;
 	}
 
     void push_forward() {
