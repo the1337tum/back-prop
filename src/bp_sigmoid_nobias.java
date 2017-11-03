@@ -13,7 +13,7 @@
 	// https://www.youtube.com/watch?v=f5liqUk0ZTw
 
 public class BackProp {
-	// Edges are initialised to values in the range +/- 0.3
+	// Edges are initialised to values in the range +/- 1.0
 	double RATE = 0.6; // slope of gradient decent
 	double BIAS = 1;   // +/- starting node bias
 	
