@@ -26,16 +26,16 @@ public class BackProp {
 	//  n-e
 	//   \e
 	//  ... 
-	double[] i;    	 // input value                  (immutable)
-	double[][] ih; 	 // input-hidden edge weights    (mutable)
-	double[] h;    	 // hidden activation            (mutable)
+	double[] i;    	 // input value                 (immutable)
+	double[][] ih; 	 // input-hidden edge weights   (mutable)
+	double[] h;    	 // hidden activation           (mutable)
 	double[][] ho; 	 // hidden-output edge weights	(mutable)
-	double[] o;    	 // output activation            (mutable)
+	double[] o;    	 // output activation           (mutable)
 	
 	double[] h_bias; // hidden bias			(mutable)
-	double[] o_bias; // output bias                  (mutable)
+	double[] o_bias; // output bias                 (mutable)
 
-	double[] t;	 // target value                 (immutable)
+	double[] t;	 // target value                (immutable)
 
 
 	// n = node, e = edge
