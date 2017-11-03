@@ -161,6 +161,7 @@ public class BackProp {
 		for (int p = 0; p < patterns.length; p++) {
 			i = patterns[p][0];
 			t = patterns[p][1];
+			
 			push_forward();
 			
 			for (int n = 0; n < i.length; n++)
