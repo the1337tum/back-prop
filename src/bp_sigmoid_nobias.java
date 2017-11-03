@@ -162,7 +162,6 @@ public class BackProp {
 			i = patterns[p][0];
 			t = patterns[p][1];
 			push_forward();
-			back_prop();
 			
 			for (int n = 0; n < i.length; n++)
 				System.out.print(i[n] + " ");
