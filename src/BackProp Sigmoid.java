@@ -79,10 +79,8 @@ public class BackProp {
 
 	// Be aware that this function is called by passing
 	// in the activated node value that was computed when
-	// forward propagating:
-	// i.e. if we are computing the derivative with respect
-	//      to the non-activated node, then the returning value
-	//      would be derivative(activate(value))
+	// forward propagating, so the derivative is with respect
+	// to the activated node.
 	private double derivative(double value) {
 		// Tanh Derivative
 		//return 1 - Math.pow(value, 2);
