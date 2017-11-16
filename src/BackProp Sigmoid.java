@@ -95,7 +95,7 @@ public class BackProp {
 	// delta[0] = output delta
 	// delta[1] = hidden delta
 	// returns Mean Square Average
-	double back_prop() {
+	private double back_prop() {
 		// output error
 		double variance = 0.0;
 		for (int n = 0; n < o.length; n++) {
@@ -132,7 +132,7 @@ public class BackProp {
 		return variance;
 	}
 
-    void push_forward() {
+    private void push_forward() {
     	// hidden activations
     	double sum = 0;
     	for (int e = 0; e < h.length; e++) {
