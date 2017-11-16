@@ -173,7 +173,8 @@ public class BackProp {
 				System.out.print(i[n] + " ");
 			System.out.print("-> ");
 			for (int n = 0; n < o.length; n++)
-				System.out.println(o[n] + " ");
+				System.out.print(o[n] + " ");
+			System.out.println();
 
 			error = back_prop();
 			System.out.println("error: " + error + "\n");
