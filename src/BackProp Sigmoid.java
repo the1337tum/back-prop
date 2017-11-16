@@ -94,6 +94,7 @@ public class BackProp {
 	
 	// delta[0] = output delta
 	// delta[1] = hidden delta
+	// returns Mean Square Average
 	double back_prop() {
 		// output error
 		double variance = 0.0;
@@ -162,12 +163,10 @@ public class BackProp {
     }
     
     void test(double[][][] patterns) {
-        	double error = 0.0;
 		for (int p = 0; p < patterns.length; p++) {
 			i = patterns[p][0];
 			t = patterns[p][1];
 			push_forward();
-			error = back_prop();
 			
 			for (int n = 0; n < i.length; n++)
 				System.out.print(i[n] + " ");
@@ -175,7 +174,8 @@ public class BackProp {
 			for (int n = 0; n < o.length; n++)
 				System.out.println(o[n] + " ");
 		}
-		System.out.println("\nerror: " + error);
+
+		System.out.println("\nerror: " + back_prop());
     }
     
 	public static void main(String[] args) {
