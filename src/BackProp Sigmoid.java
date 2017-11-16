@@ -78,7 +78,6 @@ public class BackProp {
 		// return Math.max(0.001 * value, value);
 	}
 
-	// Note that this is with respect to the activated value
 	private double derivative(double value) {
 		// Tanh Derivative
 		//return 1 - Math.pow(value, 2);
@@ -98,14 +97,14 @@ public class BackProp {
 	// returns Mean Square Average
 	private double back_prop() {
 		// output error
-		double variance = 0.0;
+		double error = 0.0;
 		for (int n = 0; n < o.length; n++) {
 			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
 			o_bias[n] -= RATE * delta[0][n];
 			
-			variance += (t[n] - o[n]) * (t[n] - o[n]);
+			error += (t[n] - o[n]) * (t[n] - o[n]);
 		}
-		variance /= o.length;
+		error /= o.length;
 
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
@@ -130,7 +129,7 @@ public class BackProp {
 				ih[n][e] -= RATE * delta[1][e] * i[n];
 			}
 		}
-		return variance;
+		return error;
 	}
 
     private void push_forward() {
