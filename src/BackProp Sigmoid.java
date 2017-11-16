@@ -78,6 +78,7 @@ public class BackProp {
 		// return Math.max(0.001 * value, value);
 	}
 
+	// Note that this is with respect to the activated value
 	private double derivative(double value) {
 		// Tanh Derivative
 		//return 1 - Math.pow(value, 2);
