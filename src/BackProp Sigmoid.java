@@ -163,19 +163,22 @@ public class BackProp {
     }
     
     void test(double[][][] patterns) {
+	    	double error;
 		for (int p = 0; p < patterns.length; p++) {
 			i = patterns[p][0];
 			t = patterns[p][1];
+
 			push_forward();
-			
 			for (int n = 0; n < i.length; n++)
 				System.out.print(i[n] + " ");
 			System.out.print("-> ");
 			for (int n = 0; n < o.length; n++)
 				System.out.println(o[n] + " ");
+
+			error = back_prop();
+			System.out.println("error: " + error + "\n");
 		}
 
-		System.out.println("\nerror: " + back_prop());
     }
     
 	public static void main(String[] args) {
