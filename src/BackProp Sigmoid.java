@@ -12,12 +12,13 @@
 	// Tensors:
 	// https://www.youtube.com/watch?v=f5liqUk0ZTw
 
+
 public class BackProp {
-	// Edges are initialised to values in the range +/- 1.0
+	// Edges are initialised to values in the range +/- 0.3
 	double RATE = 0.6; // slope of gradient decent
 	double BIAS = 1;   // +/- starting node bias
 	
-	// an array of correction deltas used for back propagation, starting from the output layer
+	// a flip-flop array; to extend the propagation to multiple hidden layers
 	double[][] delta = new double[2][];
 	
 	// Edges are linked to the origin, not the target:
@@ -26,21 +27,21 @@ public class BackProp {
 	//  n-e
 	//   \e
 	//  ... 
-	double[] i;    	 // input value                 (immutable)
-	double[][] ih; 	 // input-hidden edge weights   (mutable)
-	double[] h;    	 // hidden activation           (mutable)
-	double[][] ho; 	 // hidden-output edge weights	(mutable)
-	double[] o;    	 // output activation           (mutable)
+	double[] i;    	// input value                  (immutable)
+	double[][] ih; 	// input-hidden edge weights    (mutable)
+	double[] h;    	// hidden activation            (mutable)
+	double[][] ho; 	// hidden-output edge weights	(mutable)
+	double[] o;    	// output activation            (mutable)
 	
-	double[] h_bias; // hidden bias			(mutable)
-	double[] o_bias; // output bias                 (mutable)
+	double[] h_bias;// hidden bias			(mutable)
+	double[] o_bias;// output bias                  (mutable)
 
-	double[] t;	 // target value                (immutable)
+	double[] t;	// target value                 (immutable)
 
 
 	// n = node, e = edge
 	BackProp(int i_len, int h_len, int o_len) {
-		// create training nodes
+		// create network nodes
 		h = new double[h_len];
 		o = new double[o_len];
 
@@ -77,10 +78,6 @@ public class BackProp {
 		// return Math.max(0.001 * value, value);
 	}
 
-	// Be aware that this function is called by passing
-	// in the activated node value that was computed when
-	// forward propagating, so the derivative is with respect
-	// to that node's value
 	private double derivative(double value) {
 		// Tanh Derivative
 		//return 1 - Math.pow(value, 2);
@@ -97,12 +94,16 @@ public class BackProp {
 	
 	// delta[0] = output delta
 	// delta[1] = hidden delta
-	void back_prop() {
+	double back_prop() {
 		// output error
+		double variance = 0.0;
 		for (int n = 0; n < o.length; n++) {
 			delta[0][n] = -(t[n] - o[n]) * derivative(o[n]);
 			o_bias[n] -= RATE * delta[0][n];
+			
+			variance += (t[n] - o[n]) * (t[n] - o[n]);
 		}
+		variance /= o.length;
 
 		// hidden-output error
 		for (int n = 0; n < h.length; n++) {
@@ -127,6 +128,7 @@ public class BackProp {
 				ih[n][e] -= RATE * delta[1][e] * i[n];
 			}
 		}
+		return variance;
 	}
 
     void push_forward() {
@@ -150,7 +152,6 @@ public class BackProp {
     
     void train(double[][][] patterns, int cycles) {
     	for (int epoch = 0; epoch < cycles; epoch++) {
-        	double error = 0.0;
     		for (int p = 0; p < patterns.length; p++) {
     			i = patterns[p][0];
     			t = patterns[p][1];
@@ -161,9 +162,12 @@ public class BackProp {
     }
     
     void test(double[][][] patterns) {
+        	double error = 0.0;
 		for (int p = 0; p < patterns.length; p++) {
 			i = patterns[p][0];
+			t = patterns[p][1];
 			push_forward();
+			error = back_prop();
 			
 			for (int n = 0; n < i.length; n++)
 				System.out.print(i[n] + " ");
@@ -171,6 +175,7 @@ public class BackProp {
 			for (int n = 0; n < o.length; n++)
 				System.out.println(o[n] + " ");
 		}
+		System.out.println("\nerror: " + error);
     }
     
 	public static void main(String[] args) {
@@ -183,7 +188,7 @@ public class BackProp {
 		};
 		
 		BackProp n = new BackProp(2,2,1);
-		n.train(patterns, 1000000);
+		n.train(patterns, 100000);
 		n.test(patterns);
 		
 	}
