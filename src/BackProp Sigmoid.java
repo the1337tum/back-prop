@@ -15,7 +15,7 @@
 
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
-	double RATE = 0.6; // slope of gradient decent
+	double RATE = 0.06; // slope of gradient decent
 	double BIAS = 1;   // +/- starting node bias
 	
 	// a flip-flop array; to extend the propagation to multiple hidden layers
