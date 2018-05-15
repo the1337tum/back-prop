@@ -8,6 +8,9 @@
 // example test data:
 // http://www.cs.otago.ac.nz/cosc420/data.html
 
+// text to read
+// http://neuralnetworksanddeeplearning.com/
+
 // Remove and restructure delta code: apply error directly to nodes
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
