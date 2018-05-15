@@ -5,6 +5,9 @@
 	//============================================================================
         //http://mochajl.readthedocs.io/en/latest/user-guide/neuron.html
 
+// example test data:
+// http://www.cs.otago.ac.nz/cosc420/data.html
+
 // Remove and restructure delta code: apply error directly to nodes
 public class BackProp {
 	// Edges are initialised to values in the range +/- 0.3
